@@ -1,75 +1,115 @@
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:stock_manager_app/constants/delete_service.dart';
-import 'package:stock_manager_app/constants/others_constants.dart';
+import 'package:stock_manager_app/constants/static_widgets_constants.dart';
+import 'package:stock_manager_app/models/product.dart';
+import 'package:stock_manager_app/providers/product.dart';
 import 'package:stock_manager_app/screens/products/product_create_update.dart';
 import 'package:stock_manager_app/styles/colors.dart';
 
-class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({super.key});
+
+class ProductDetailScreen extends StatelessWidget{
+  final Product product;
+  final bool canDelete;
+  const ProductDetailScreen({super.key, required this.product,required this.canDelete});
   
   @override
   Widget build(BuildContext context) {
 
-    /* final format = DateFormat("yyyy-mm-dd"); */
-    return Scaffold(
+
+  ProductUpdateNotifier productUpdateNotifier = ProductUpdateNotifier();
+  productUpdateNotifier.setProduct(product);
+    return ChangeNotifierProvider<ProductUpdateNotifier>(create: (context){
+      return productUpdateNotifier;
+    },
+    child: Scaffold(
       appBar: AppBar(
         title: const Text("Détails Produit"),
         leading: const CloseButton(),
       ),
       body:  Padding(
         padding: EdgeInsets.only(left:10.0,right: 10.0,top: MediaQuery.of(context).size.height*0.10),
-        child: Column(
+        child: SingleChildScrollView(child: Consumer<ProductUpdateNotifier>(
+          builder: (context,model,child){
+            Product productToShow = model.product;
+            
+            var outputDate = "Aucune";
+            if(product.expireddate !=null){
+              DateTime parseDate = DateFormat("yyyy-MM-dd hh:mm:ss").parse(productToShow.expireddate.toString());
+              var inputDate = DateTime.parse(parseDate.toString());
+              var outputFormat = DateFormat('dd/MM/yyyy');
+              outputDate = outputFormat.format(inputDate);
+            }
+
+            print(outputDate);
+
+            return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-           const Row(
+            Row(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.file_open,size: 30.0,),
-                Text("Spaghettis",style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 30.0),),
+               const Icon(Icons.file_open,size: 30.0,),
+                Text(productToShow.name,style: const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 30.0),),
               ],
             ),
-             SizedBox(height: 20.0,),
+            const  SizedBox(height: 20.0,),
               ListTile(
-              leading: Icon(Icons.money),
-              titleTextStyle:  TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
-              title:  Text("Prix"),
-              subtitle: Text("1000 FCFA"),
+              leading: const Icon(Icons.money),
+              titleTextStyle: const  TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
+              title: const Text("Prix"),
+              subtitle: Text("${productToShow.price} francs CFA"),
             ) , 
              ListTile(
-              leading: Icon(Icons.date_range),
-              titleTextStyle:  TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
-              title: Text("Date de péremption"),
-              subtitle: Text("20/10/2027"),
+              leading: const Icon(Icons.remove_shopping_cart),
+              titleTextStyle:   const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
+              title: const Text("Seuil"),
+              subtitle: Text("${productToShow.seuil}"), 
             ) ,
              ListTile(
-              leading: Icon(Icons.description),
-              titleTextStyle:  TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
-              title: Text("Description"),
-              subtitle: Text("In this tutorial, we will learn how to create beautiful and customizable card UI in Flutter."),
+              leading: const Icon(Icons.date_range),
+              titleTextStyle:   const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
+              title: const Text("Date de péremption"),
+              subtitle: Text(outputDate), 
             ) ,
-             SizedBox(height: 30.0,),
+             ListTile(
+              leading: const Icon(Icons.description),
+              titleTextStyle: const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
+              title: const Text("Description"),
+              subtitle: Text(productToShow.description),
+            ) ,
+             ListTile(
+              leading: const Icon(Icons.person),
+              titleTextStyle: const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
+              title: const Text("Enregistré par"),
+              subtitle: Text(productToShow.userName),
+            ) ,
+           const  SizedBox(height: 30.0,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(onPressed: (){
 
              Navigator.of(context).push(
-                            CustomPageTransistion(page: const  ProductCreateUpdateScreen(iscreate: false,),duration: 500).maketransition()
+                            CustomPageTransistion(page:  ProductCreateUpdateScreen(iscreate: false,productModel:model),duration: 500).maketransition()
                           );
 
                    }, child: const Text('Modifier',style: TextStyle(color: Colors.white),)),
                   const SizedBox(width: 5.0,),
-                 ElevatedButton(onPressed: () async {
+                 canDelete ?  ElevatedButton(onPressed: () async {
                     Navigator.of(context).pop();
-                    DeleteService.showDeleteAlert(context,name: "Spaghettis");
-                  }, child: const Text('Supprimer',style: TextStyle(color: Colors.white),)),
+                    DeleteService.showDeleteAlert(context,productToShow);
+                  }, child: const Text('Supprimer',style: TextStyle(color: Colors.white),)) : Container(),
                 ],
             ),
           ],
-        ),
-      ),
+        );
+        },),
+      ),),
+    ),
     );
   }
+ 
 
 }

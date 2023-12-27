@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stock_manager_app/constants/logo.dart';
-import 'package:stock_manager_app/constants/others_constants.dart';
+import 'package:stock_manager_app/constants/static_widgets_constants.dart';
+import 'package:stock_manager_app/models/user.dart';
 import 'package:stock_manager_app/screens/employees/create_employee.dart';
 import 'package:stock_manager_app/screens/employees/employees_body.dart';
 import 'package:stock_manager_app/screens/home.dart';
@@ -10,7 +11,9 @@ import 'package:stock_manager_app/widgets/product_body.dart';
 import 'package:stock_manager_app/widgets/stock_body.dart';
 
 class CustomDrawer extends StatelessWidget{
-  const CustomDrawer({super.key});
+  const CustomDrawer({super.key,required this.connectedUser,required this.boutiquename});
+  final dynamic connectedUser;
+  final String boutiquename;
 
   @override
   Widget build(BuildContext context) {
@@ -19,34 +22,35 @@ class CustomDrawer extends StatelessWidget{
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.32,
-            child: DrawerHeader(
-          decoration: const BoxDecoration(color: primaryColor),
-          child:
+          Container(
+            alignment: Alignment.center,
+            color: primaryColor,
+            padding: const EdgeInsets.only(left : 20.0,top: 20.0),
+            constraints : BoxConstraints(minHeight: MediaQuery.of(context).size.height * 0.32) ,
+            child: 
          Column(
             children: [
-            const Row(
+             Row(
               children: [
                 logoStockManager,
                 Expanded(child: 
                  ListTile(
-                title: Text('Stock Manager',style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,color: Colors.white),),
-                subtitle: Text('Boutique des Jouets',style: TextStyle(fontSize: 15.0,color: Colors.white),),
+                title: const Text('Stock Manager',style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,color: Colors.white),),
+                subtitle: Text(boutiquename,style: const TextStyle(fontSize: 15.0,color: Colors.white),),
               ),
                 )
               ],
              ),
-         const Align(
+          Align(
           alignment: Alignment.centerLeft,
           child: Text(
-              'Jane Doe',
-              style: TextStyle(fontSize: 30.0,color: Colors.white),
+              '${connectedUser.firstname} ${connectedUser.name}',
+              style: const TextStyle(fontSize: 25.0,color: Colors.white),
             ),
           ), 
-        const  Align(
+          Align(
           alignment: Alignment.centerLeft,
-          child:   Text('Compte propriétaire',style: TextStyle(color: Colors.white),)
+          child:   Text( connectedUser is Owner ?'Compte propriétaire' : (connectedUser.role=="admin" ? 'Compte assistant/administrateur': 'Compte assistant/employé'),style: const TextStyle(color: Colors.white),)
           ),
           Align(
           alignment: Alignment.centerRight,
@@ -54,9 +58,11 @@ class CustomDrawer extends StatelessWidget{
             width: 100.0,
             child: 
             TextButton(
-              onPressed: (){
+              onPressed: () async {
+
+                  Navigator.of(context).pop();
                   Navigator.of(context).push(
-                            CustomPageTransistion(page:  UserCreateScreen(iscreate: false,justview: true,),duration: 500).maketransition()
+                            CustomPageTransistion(page:  UserCreateScreen(iscreate: false,justview: true,isconnectedUser: true, user: connectedUser,),duration: 500).maketransition()
                           );
               }, child: 
            const Row(
@@ -69,39 +75,39 @@ class CustomDrawer extends StatelessWidget{
             ),)
           ),
             ],
-          )
           )),
           ListTile(
             leading: const Icon(Icons.shopping_cart,color: primaryColor,),
             title: const Text(
-              'Mes produits',
+              'Produits',
               style: TextStyle(color: primaryColor,fontWeight: FontWeight.w500,),
             ),
             onTap: () {
               Navigator.of(context).pop();
-              HomeScreenState.state.changeBody("Mes Produits", const ProductBody());
+              HomeScreenState.state.changeBody("Produits", const ProductBody());
             },
           ),
           ListTile(
             leading: const Icon(Icons.store,color: primaryColor,),
             title: const Text(
-              'Mes stocks',
+              'Stocks',
               style: TextStyle(color: primaryColor,fontWeight: FontWeight.w500,),
             ),
             onTap: () {
               Navigator.of(context).pop();
-              HomeScreenState.state.changeBody("Mes Stocks", const StockBody());
+              HomeScreenState.state.changeBody("Stocks", const StockBody());
             },
           ),
           ListTile(
             leading: const Icon(Icons.people,color: primaryColor,),
             title: const Text(
-              'Mes employés',
+              'Assistants',
               style: TextStyle(color: primaryColor,fontWeight: FontWeight.w500,),
             ),
+            subtitle: const Text('Administrateurs et employés'),
             onTap: () {
               Navigator.of(context).pop();
-              HomeScreenState.state.changeBody("Utilisateurs", EmployeeHomeScreen());
+              HomeScreenState.state.changeBody("Assistants", EmployeeHomeScreen());
             },
           ),
           const Divider(
@@ -109,7 +115,7 @@ class CustomDrawer extends StatelessWidget{
             thickness: 1,
             color: primaryColor,
           ),
-          ListTile(
+          connectedUser is Owner ? ListTile(
             leading: const Icon(Icons.settings,color: primaryColor,),
             title: const Text(
               'Paramètres',
@@ -119,7 +125,7 @@ class CustomDrawer extends StatelessWidget{
               Navigator.of(context).pop();
              HomeScreenState.state.changeBody("Paramètres", SettingsScreen());
             },
-          ),
+          ) : Container(),
           ListTile(
             leading: const Icon(Icons.help,color: primaryColor,),
             title: const Text(

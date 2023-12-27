@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:stock_manager_app/constants/db_instaces.dart';
 import 'package:stock_manager_app/constants/logo.dart';
-import 'package:stock_manager_app/constants/others_constants.dart';
-import 'package:stock_manager_app/screens/login.dart';
+import 'package:stock_manager_app/constants/static_widgets_constants.dart';
+import 'package:stock_manager_app/models/user.dart';
 import 'package:stock_manager_app/styles/colors.dart';
 
 class SignupEmployeeScreen extends StatefulWidget{
@@ -15,6 +16,8 @@ class SignupEmployeeScreen extends StatefulWidget{
 class SignupEmployeeScreenState extends State<SignupEmployeeScreen>{
 
   bool showProgress = false;
+  bool hidepass = true;
+  bool hidepassconfirm = true;
   int currentStep = 0;
   final emailFormKey = GlobalKey<FormState>();
   final passwordFormKey = GlobalKey<FormState>();
@@ -22,13 +25,59 @@ class SignupEmployeeScreenState extends State<SignupEmployeeScreen>{
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordVerifyController = TextEditingController();
 
-  void saveEmployee(BuildContext context){
+  List<Employee> employees = [];
+
+   Employee? checkEmployeeEmail(String email) {
+    
+    for (var element in employees) {
+      print("mail----${element.email}");
+      if(element.email == email.trim()){
+        return element;
+      }
+    }
+
+    return null;
+  }
+
+  void saveEmployee(BuildContext context,Employee employee) async {
     //--Enregistrer l'employé
 
+    try {
+      Employee newemployee = employee.copyWith(password: passwordController.text);
+      await stockManagerdatabase.updateUser(employee.id!, newemployee);
+     
+     if(mounted){
+       Navigator.of(context).pop();
+     }
 
-      Navigator.of(context).pushReplacement(
-         CustomPageTransistion(page: const LoginScreen(),duration: 1200).maketransition()
-      );
+      ToastMessage(message: "Compte employé enregistré avec succès.").showToast();
+    } catch (e) {
+      ToastMessage(message: "Une erreur s'est produite. Veuillez recommencer.").showToast();
+      print(e);
+    }
+
+  }
+
+loadData() async{
+    //load
+    try {
+     employees = await stockManagerdatabase.getAllEmployee();
+    } catch (e) {
+      ToastMessage(message: "Une erreur s'est produite.").showToast();
+      print(e);
+    }
+  }
+
+
+  @override
+  void initState() {
+    super.initState(); 
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await loadData();
+         if(mounted){
+        setState(() { });    
+     }   
+    });
   }
 
   @override
@@ -78,13 +127,15 @@ class SignupEmployeeScreenState extends State<SignupEmployeeScreen>{
               onStepContinue: () {
                 if (currentStep == 0) {
                   if(emailFormKey.currentState!.validate()){
+
                     setState(() {
                       currentStep++;
                     });
                   }
                 }else{
                     if(passwordFormKey.currentState!.validate()){
-                      saveEmployee(context);
+                      Employee employee = checkEmployeeEmail(emailController.text)!;
+                      saveEmployee(context,employee);
                     }
                 }
               },
@@ -113,8 +164,8 @@ class SignupEmployeeScreenState extends State<SignupEmployeeScreen>{
                       ),
                     ),
                     validator: (String? value){
-                      final regexp = RegExp(r"^[a-z]{3,}@[a-z.]{3,}$",caseSensitive: false,multiLine: false);
-                      return regexp.hasMatch(value?? "") ? null : "Adresse mail invalide";
+                      final regexp = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+$",caseSensitive: false,multiLine: false);
+                      return regexp.hasMatch(value?? "") ? (checkEmployeeEmail(value!)==null ? "Adresse mail introuvable." : null) : "Adresse mail invalide";
                     },
                   ),
                     ))),
@@ -128,26 +179,33 @@ class SignupEmployeeScreenState extends State<SignupEmployeeScreen>{
                           TextFormField(
                     keyboardType: TextInputType.visiblePassword,
                     controller: passwordController,
-                    obscureText: true,
+                    obscureText: hidepass,
                     decoration:  InputDecoration(
-                      suffix: const Icon(Icons.lock),
+                      suffix:  IconButton(onPressed: (){
+                        setState(() {
+                          hidepass = !hidepass;
+                        });
+                      }, icon: hidepass ? const Icon(Icons.visibility): const Icon(Icons.visibility_off)),
                       labelText: "Entrez votre mot de passe", border:OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10)
                       ),
                       
                     ),
                     validator: (String? value){
-                      return value == "abcd" ? null : "Mot de passe incorrecte.";
+                      return value!.length >= 8 ? null : "Au moins 8 caractères.";
                     },
                   ),
                   const SizedBox(height: 15.0,),
                   TextFormField(
                     keyboardType: TextInputType.visiblePassword,
                     controller: passwordVerifyController,
-                    obscureText: true,
+                    obscureText: hidepassconfirm,
                     decoration:  InputDecoration(
-                      
-                      suffix: const Icon(Icons.lock),
+                      suffix:  IconButton(onPressed: (){
+                        setState(() {
+                          hidepassconfirm = !hidepassconfirm;
+                        });
+                      }, icon: hidepassconfirm ? const Icon(Icons.visibility): const Icon(Icons.visibility_off)),
                       labelText: "Confirmez votre mot de passe", border:OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10)
                       ),

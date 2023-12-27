@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stock_manager_app/constants/db_instaces.dart';
+import 'package:stock_manager_app/models/user.dart';
+import 'package:stock_manager_app/providers/notifications.dart';
 import 'package:stock_manager_app/screens/notifications.dart';
+import 'package:stock_manager_app/styles/colors.dart';
 import 'package:stock_manager_app/widgets/drawer.dart';
-import 'package:stock_manager_app/constants/others_constants.dart';
+import 'package:stock_manager_app/constants/static_widgets_constants.dart';
 import 'package:stock_manager_app/screens/login.dart';
 import 'package:stock_manager_app/widgets/product_body.dart';
 
@@ -16,9 +21,44 @@ class HomeScreen extends StatefulWidget{
 
 class HomeScreenState extends State<HomeScreen>{
 
-  String title = "Mes Produits";
+  String title = "Produits";
   Widget homeBody = const ProductBody();
   static late HomeScreenState state;
+  Owner owner = Owner.simple() ;
+  var connectedUSer;
+  String lastMessage = "";
+  bool newnotification = false;
+
+  NewNotificationNotifier notificationNotifier = NewNotificationNotifier();
+
+   HomeScreenState() {
+   stockManagerNotificationService.messageStreamController.listen((message) {
+     if(mounted){
+      setState(() {
+       if (message.notification != null) {
+         lastMessage = 'Received a notification message:'
+             '\nTitle=${message.notification?.title},'
+             '\nBody=${message.notification?.body},'
+             '\nData=${message.data}';
+       } else {
+         lastMessage = 'Received a data message: ${message.data}';
+       }
+
+       newnotification = true;
+     });
+     }
+    ToastMessage(message: "Nouvelle notification : $lastMessage");
+   });
+  }
+
+  refresh(newconnecteduser,newowner)async {
+    print("refresh for drawer");
+      setState(() {
+        owner = newowner;
+        connectedUSer = newconnecteduser;
+      });
+  }
+
 
   void logout(BuildContext context){
 
@@ -26,6 +66,8 @@ class HomeScreenState extends State<HomeScreen>{
         CustomPageTransistion(page: const LoginScreen(),duration: 500,type: PageTransitionType.leftToRightWithFade).maketransition()
     );
   }
+
+
 
   void changeBody(String newTitle,Widget newBody){
     if(mounted){
@@ -36,23 +78,52 @@ class HomeScreenState extends State<HomeScreen>{
     }
   }
 
+  loadData() async {
+     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String ownerId =  prefs.getString('ownerId')!;
+      owner =  await stockManagerdatabase.getUserWithId(ownerId,"Owner");
+      String userId =  prefs.getString('loggedUserId')!;
+      if(prefs.getInt('isOwner')! == 0){
+        connectedUSer =  await stockManagerdatabase.getUserWithId(userId,"Employee");
+      }else{
+        connectedUSer = owner;
+      }
+     } catch (e) {
+       print(e);
+       ToastMessage(message: "Une erreur s'est produite.");
+     }
+  }
+
   @override
   void initState() {
     super.initState();
     state = this;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await loadData();
+         if(mounted){
+        setState(() { });    
+     }   
+    });
   }
   
   
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+
+    return Scaffold(
       appBar: AppBar(title: Text(title),
       actions: [
         IconButton(onPressed: (){
           Navigator.of(context).push(
                             CustomPageTransistion(page: const NotificationsScreen(),duration: 500).maketransition()
-                          );
-        }, icon: const Icon(Icons.notifications)),
+                          ).then((value){
+                            setState(() {
+                               newnotification = false;
+                            });
+                          });
+        }, icon: newnotification ?  const Icon(Icons.notifications_on,color: secondaryColor,)  : const Icon(Icons.notifications) ),
+
         IconButton(onPressed: (){
           logout(context);
         }, icon: const Icon(Icons.logout)),
@@ -76,9 +147,14 @@ class HomeScreenState extends State<HomeScreen>{
         }) */
       ],
       ),
-      drawer: const CustomDrawer(),
+      drawer:  CustomDrawer(connectedUser:connectedUSer,boutiquename: owner.boutique,),
       body: homeBody,
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
 }

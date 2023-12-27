@@ -4,7 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:stock_manager_app/constants/others_constants.dart';
+import 'package:stock_manager_app/constants/static_widgets_constants.dart';
 import 'package:stock_manager_app/screens/login.dart';
 import 'package:stock_manager_app/styles/colors.dart';
 

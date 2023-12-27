@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "280960927661",
+    "firebase_url": "https://stockmanager-f379c-default-rtdb.firebaseio.com",
+    "project_id": "stockmanager-f379c",
+    "storage_bucket": "stockmanager-f379c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280960927661:android:da48277b0c90a85e608324",
+        "android_client_info": {
+          "package_name": "com.example.stock_manager_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMGTG-xBVA5Q6m-XtMiukuxHoVpFPvhC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

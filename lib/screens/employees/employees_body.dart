@@ -1,15 +1,80 @@
 import 'package:flutter/material.dart';
-import 'package:stock_manager_app/constants/others_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stock_manager_app/constants/db_instaces.dart';
+import 'package:stock_manager_app/constants/onprocess_error.dart';
+import 'package:stock_manager_app/constants/static_widgets_constants.dart';
+import 'package:stock_manager_app/models/user.dart';
 import 'package:stock_manager_app/screens/employees/create_employee.dart';
 import 'package:stock_manager_app/styles/colors.dart';
 import 'package:stock_manager_app/widgets/user_card.dart';
 
 class EmployeeHomeScreen extends StatefulWidget {
   @override
-  _EmployeeHomeScreenState createState() => _EmployeeHomeScreenState();
+  EmployeeHomeScreenState createState() => EmployeeHomeScreenState();
 }
  
-class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
+class EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
+  List<Employee> employees = [];
+  List<Employee> admins = [];
+  List<Employee> simpleemployees = [];
+  bool isOwner = false;
+  bool dataloaded = false;
+  static  EmployeeHomeScreenState? state ;
+
+  refresh(newadmins,newsimpleemployees){
+    if(mounted){
+      setState(() {
+      admins = newadmins;
+      simpleemployees = newsimpleemployees;
+    });
+    }
+  }
+
+  loadData() async {
+    try {
+
+      state = this;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String ownerId =  prefs.getString('ownerId')!;
+      int isOwnerPrefs = prefs.getInt('isOwner')!;
+      if(isOwnerPrefs==1) isOwner = true;
+      if(DATACONSTANTSOFSESSION.employees != null){
+        employees = DATACONSTANTSOFSESSION.employees! ;
+      }else{
+        employees =  await stockManagerdatabase.getEmployee(ownerId);
+        DATACONSTANTSOFSESSION.employees = employees;
+      }
+      admins = [];
+      simpleemployees = [];
+      for (var employee in employees) {
+          if(employee.role=="admin"){
+            admins.add(employee);
+          }else{
+            simpleemployees.add(employee);
+          }
+      }
+
+    } catch (e) {
+      ToastMessage(message: "Une erreur s'est produite.").showToast();
+    }
+    if(mounted){
+    setState(() {
+      dataloaded = true;
+    });
+    }
+
+  }
+
+  @override
+  void initState() {
+    super.initState(); 
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await loadData();
+         if(mounted){
+        setState(() { });    
+     }   
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -19,7 +84,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
           preferredSize: Size.fromHeight(50.0), // here the desired height
           child:AppBar(
           elevation: 0.0,
-          bottom:  TabBar(
+          bottom: const  TabBar(
             unselectedLabelColor : Colors.white,
             labelColor: Colors.white,
             indicatorColor: secondaryColor,
@@ -34,34 +99,35 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
           ),
         body: TabBarView(
           children: [
-           UserListView(users: [1,2,3],areadmin: true,),
-           UserListView(users: [1,2,3,4],areadmin: false,),
+           dataloaded ? UserListView(users: admins,areadmin: true,isOwner:isOwner) : const OnProcess(),
+           dataloaded ? UserListView(users: simpleemployees,areadmin: false,isOwner:isOwner) : const OnProcess(),
           ],
         ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
+      floatingActionButton: isOwner ? FloatingActionButton(onPressed: (){
 
          Navigator.of(context).push(
                             CustomPageTransistion(page:  UserCreateScreen(),duration: 500).maketransition()
                           );
                           
       },child: const Icon(Icons.add,color: Colors.white,)
-      ),
+      ) : null,
     ));
   }
 }
 
 
 class UserListView extends StatelessWidget{
-   const UserListView({super.key,required this.users,required this.areadmin});
+  const UserListView({super.key,required this.users,required this.areadmin, required this.isOwner});
   final List  users;
   final bool areadmin;
+  final bool isOwner;
   @override
   Widget build(BuildContext context) {
     String emptyText = areadmin ? "Aucun administrateurs":"Aucun employé";
    return users.isNotEmpty ? ListView.builder(
     itemCount: users.length,
     itemBuilder: (context,index){
-      return const UserCard();
+      return UserCard(employee : users[index],canDelete:isOwner);
    }) : Container(
     width: MediaQuery.of(context).size.width,
     color: secondaryColor,
