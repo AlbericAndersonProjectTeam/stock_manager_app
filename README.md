@@ -1,6 +1,6 @@
-# stock_manager_app
+# StockManager
 
-A new Flutter project.
+Application de gestion de stock.
 
 ## Getting Started
 
