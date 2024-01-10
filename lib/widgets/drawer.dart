@@ -11,6 +11,7 @@ import 'package:stock_manager_app/widgets/settings_body.dart';
 import 'package:stock_manager_app/styles/colors.dart';
 import 'package:stock_manager_app/widgets/product_body.dart';
 import 'package:stock_manager_app/widgets/stock_body.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomDrawer extends StatelessWidget{
   const CustomDrawer({super.key,required this.connectedUser,required this.boutiquename});
@@ -145,7 +146,16 @@ class CustomDrawer extends StatelessWidget{
               'Politique de confidentialité et de sécurité',
               style: TextStyle(color: primaryColor,fontWeight: FontWeight.w500,),
             ),
-            onTap: () {
+            onTap: () async {
+              Navigator.of(context).pop();
+              final Uri url = Uri.parse('https://github.com/AlbericAndersonProjectTeam/stock_manager_app/blob/main/README.md#politique-de-confidentialit%C3%A9-et-de-s%C3%A9curit%C3%A9');
+
+                try {
+                   await launchUrl(url);
+                } catch (e) {
+                    ToastMessage(message: "Action impossible sur cet appareil.").showToast();
+                }
+              
             },
           ),
           ListTile(
