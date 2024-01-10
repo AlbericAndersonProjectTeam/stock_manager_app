@@ -60,11 +60,25 @@ class HomeScreenState extends State<HomeScreen>{
   }
 
 
-  void logout(BuildContext context){
-
-     Navigator.of(context).pushReplacement(
-        CustomPageTransistion(page: const LoginScreen(),duration: 500,type: PageTransitionType.leftToRightWithFade).maketransition()
-    );
+ void logout(BuildContext context){
+     showDialog(context: context, builder: (dialogcontext){
+       return StatefulBuilder(builder: (dialogcontext,setState){
+        return AlertDialog(
+        title: const Text("Etes vous sûr de vouloir vous déconnecter ?",style: TextStyle(fontSize: 20.0),),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.elliptical(5, 5))),
+        actions: [
+          TextButton(onPressed: (){
+        Navigator.of(context).pushReplacement(
+            CustomPageTransistion(page: const LoginScreen(),duration: 500,type: PageTransitionType.leftToRightWithFade).maketransition()
+        );
+          }, child:  const Text('Oui',style: TextStyle(color: primaryColor,fontSize: 18.0),)),
+          TextButton(onPressed: (){
+            Navigator.of(dialogcontext).pop();
+            }, child:const Text('Non',style: TextStyle(color: primaryColor,fontSize: 18.0))),
+        ],
+      );
+      });
+    });
   }
 
 

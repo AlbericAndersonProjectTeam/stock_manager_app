@@ -5,6 +5,8 @@ import 'package:stock_manager_app/models/user.dart';
 import 'package:stock_manager_app/screens/employees/create_employee.dart';
 import 'package:stock_manager_app/screens/employees/employees_body.dart';
 import 'package:stock_manager_app/screens/home.dart';
+import 'package:stock_manager_app/widgets/about_body.dart';
+import 'package:stock_manager_app/widgets/help_body.dart';
 import 'package:stock_manager_app/widgets/settings_body.dart';
 import 'package:stock_manager_app/styles/colors.dart';
 import 'package:stock_manager_app/widgets/product_body.dart';
@@ -133,6 +135,8 @@ class CustomDrawer extends StatelessWidget{
               style: TextStyle(color: primaryColor,fontWeight: FontWeight.w500,),
             ),
             onTap: () {
+              Navigator.of(context).pop();
+             HomeScreenState.state.changeBody("Aide", HelpScreen());
             },
           ),
           ListTile(
@@ -151,6 +155,8 @@ class CustomDrawer extends StatelessWidget{
               style: TextStyle(color: primaryColor,fontWeight: FontWeight.w500,),
             ),
             onTap: () {
+              Navigator.of(context).pop();
+             HomeScreenState.state.changeBody("A Propos", AboutScreen());
             },
           ),
         ],

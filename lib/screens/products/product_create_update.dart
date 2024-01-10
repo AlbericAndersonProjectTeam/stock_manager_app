@@ -243,7 +243,7 @@ class ProductCreateUpdateScreenState extends State<ProductCreateUpdateScreen>{
                     keyboardType: TextInputType.number,
                     controller: seuilController,
                     decoration:  InputDecoration(
-                      label: const Text('Seuil'),
+                      label: const Text('Seuil *'),
                       border:OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                       ),

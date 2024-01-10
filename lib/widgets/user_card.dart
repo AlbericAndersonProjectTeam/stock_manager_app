@@ -29,7 +29,7 @@ showBottomSheetMenu(BuildContext context){
              if(await canLaunchUrl(params)){
                  await launchUrl(params);
              }else{
-              ToastMessage(message: "Action impossible sur cet appareil.");
+              ToastMessage(message: "Action impossible sur cet appareil.").showToast();
              }
             },
            ),
@@ -49,7 +49,7 @@ showBottomSheetMenu(BuildContext context){
                 try {
                    await launchUrl(params);
                 } catch (e) {
-                    ToastMessage(message: "Action impossible sur cet appareil.");
+                    ToastMessage(message: "Action impossible sur cet appareil.").showToast();
                 }
               
             },
