@@ -64,7 +64,7 @@ Cette option est confgurable dans les paramètres. Vous recevrez d'abord des not
 Seuls le propriétaire et les assistants administrateurs peuvent supprimer des produits ou stocks.
 
 
-## Politique de confidentialité et de sécuirité
+## Politique de confidentialité et de sécurité
 
 Cette politique de confidentialité décrit comment StockManager collecte, utilise et partage les informations personnelles que vous fournissez lorsque vous utilisez l'application.
 
