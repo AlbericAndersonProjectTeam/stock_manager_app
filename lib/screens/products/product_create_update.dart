@@ -279,7 +279,7 @@ class ProductCreateUpdateScreenState extends State<ProductCreateUpdateScreen>{
                   ),
           ],)),
              const SizedBox(height: 20.0,),
-             Align(alignment: Alignment.centerLeft,child:  ElevatedButton(onPressed: () async {
+             Align(alignment: Alignment.centerRight,child:  ElevatedButton(onPressed: () async {
                    if(formKey.currentState!.validate()){
                       saveProduct(context);
                    }

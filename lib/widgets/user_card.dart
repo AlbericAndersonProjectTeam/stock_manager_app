@@ -4,6 +4,7 @@ import 'package:stock_manager_app/constants/delete_service.dart';
 import 'package:stock_manager_app/constants/static_widgets_constants.dart';
 import 'package:stock_manager_app/models/user.dart';
 import 'package:stock_manager_app/screens/employees/create_employee.dart';
+import 'package:stock_manager_app/styles/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UserCard extends StatelessWidget{
@@ -95,6 +96,7 @@ showBottomSheetMenu(BuildContext context){
                           );
       },
       child: Card(
+          elevation: 3.0,
   shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(4),
   ),
@@ -103,20 +105,20 @@ showBottomSheetMenu(BuildContext context){
       child: Padding(padding: const EdgeInsets.all(10.0),child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-       const Icon(Icons.file_open,size: 30.0,),
+       const Icon(Icons.file_open,size: 30.0,color: primaryColor,),
             Expanded(child: 
               SizedBox(
                 width: 150,
                 child: 
              ListTile(
-              title: Text('${employee.name} ${employee.firstname}',style: const TextStyle(fontWeight: FontWeight.w500),),
-              subtitle: Text(employee.email,maxLines: 1,),
+              title: Text('${employee.name} ${employee.firstname}',style: const TextStyle(fontWeight: FontWeight.w500,color: primaryColor),),
+              subtitle: Text(employee.email,maxLines: 1,style: TextStyle(color: primaryColor),),
              ),
               )) ,
 
               IconButton(onPressed: (){
                 showBottomSheetMenu(context);
-              }, icon: Icon(Icons.more_horiz))
+              }, icon: Icon(Icons.more_horiz,color: primaryColor,))
               ]
       ),),
     ),

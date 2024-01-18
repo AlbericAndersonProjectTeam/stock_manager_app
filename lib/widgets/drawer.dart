@@ -20,16 +20,27 @@ class CustomDrawer extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-  return Drawer(
-    backgroundColor: secondaryColor,
+  return Container(
+    margin: const EdgeInsets.only(top: 35.0),
+    child: Drawer(
+      backgroundColor: const Color.fromRGBO(235, 231, 231, 1),
+      shape:  const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(0),
+                  bottomRight: Radius.circular(0)),
+            ),
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           Container(
             alignment: Alignment.center,
-            color: primaryColor,
-            padding: const EdgeInsets.only(left : 20.0,top: 20.0),
-            constraints : BoxConstraints(minHeight: MediaQuery.of(context).size.height * 0.32) ,
+            decoration: const BoxDecoration(
+             color: primaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            margin: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
+            constraints : BoxConstraints(minHeight: MediaQuery.of(context).size.height * 0.25) ,
             child: 
          Column(
             children: [
@@ -79,7 +90,14 @@ class CustomDrawer extends StatelessWidget{
           ),
             ],
           )),
-          ListTile(
+          Container(
+            margin: const EdgeInsets.all(10.0),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Column(children: [
+              ListTile(
             leading: const Icon(Icons.shopping_cart,color: primaryColor,),
             title: const Text(
               'Produits',
@@ -113,12 +131,16 @@ class CustomDrawer extends StatelessWidget{
               HomeScreenState.state.changeBody("Assistants", EmployeeHomeScreen());
             },
           ),
-          const Divider(
-            height: 10,
-            thickness: 1,
-            color: primaryColor,
-          ),
-          connectedUser is Owner ? ListTile(
+            ]),),
+
+              Container(
+            margin: const EdgeInsets.all(10.0),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Column(children: [
+                connectedUser is Owner ? ListTile(
             leading: const Icon(Icons.settings,color: primaryColor,),
             title: const Text(
               'Paramètres',
@@ -169,9 +191,13 @@ class CustomDrawer extends StatelessWidget{
              HomeScreenState.state.changeBody("A Propos", AboutScreen());
             },
           ),
+            ]),
+            ),
+          
         ],
       ),
-    );
+    ),
+  );
   }
 
 }

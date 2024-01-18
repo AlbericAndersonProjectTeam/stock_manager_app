@@ -117,7 +117,8 @@ class ProductBodyState extends State<ProductBody>{
           controller: searchController,
           decoration: InputDecoration(
             hintText: "Chercher un produit",
-            contentPadding: EdgeInsets.all(5.0),
+            hintStyle: const TextStyle(color: primaryColor),
+            contentPadding: const EdgeInsets.all(5.0),
             suffix: searching ? IconButton(onPressed: (){
             setState(() {
               searching = false;

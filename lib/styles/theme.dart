@@ -85,12 +85,6 @@ ThemeData customThemeDark = ThemeData(
         ),
 
 
-
-        //Drawer theme/style
-        drawerTheme: const DrawerThemeData(
-          backgroundColor: secondaryColor,
-          
-        ),
         
         //Button theme/style
         buttonTheme: const ButtonThemeData(

@@ -247,7 +247,7 @@ class StockTransactionScreenState extends State<StockTransactionScreen>{
           children: [
            const  Expanded(
               child: ListTile(
-                title: Text('Transactions',style: const TextStyle(fontSize: 20.0,fontWeight: FontWeight.w500),),
+                title: Text('Transactions',style: const TextStyle(fontSize: 20.0,fontWeight: FontWeight.w500,color: primaryColor,),),
                 subtitle: Text('Managez vos entrées et sorties de stock.',style: TextStyle(fontSize: 10.0),),
               )
               ),
@@ -291,7 +291,7 @@ class TransactionCard extends StatelessWidget{
           elevation: 8.0,
           margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
-            decoration: const BoxDecoration(color: secondaryColor),
+            //decoration: const BoxDecoration(color: secondaryColor),
             child: Column(
               children: [
 
@@ -305,18 +305,18 @@ class TransactionCard extends StatelessWidget{
                     right:  BorderSide(width: 1.0, color: Colors.black26))),
             child: Text(
             "$number",
-            style: const TextStyle( fontWeight: FontWeight.bold,fontSize: 20.0),
+            style: const TextStyle( fontWeight: FontWeight.bold,fontSize: 20.0,color: primaryColor,),
           ),
           ),
           title: Text(
             type,
-            style: const TextStyle( fontWeight: FontWeight.bold,fontSize: 20.0),
+            style: const TextStyle( fontWeight: FontWeight.bold,fontSize: 20.0,color: primaryColor,),
           ),
           subtitle: Text(
               description,
-               style: const TextStyle(fontSize: 11.0)),
+               style: const TextStyle(fontSize: 11.0,color: primaryColor,)),
           trailing:
-             const Icon(Icons.keyboard_arrow_right,  size: 30.0),
+             const Icon(Icons.keyboard_arrow_right,  size: 30.0,color: primaryColor,),
           onTap: () {
             if(number!=0){
 
@@ -415,24 +415,24 @@ class StockTransactionHistoryViewState extends State<StockTransactionHistoryView
                   children: [
                     e is Vente ? RichText(text: TextSpan(
                       children: [
-                        const TextSpan(text: 'Client : ',style: TextStyle(color: Colors.black87)),
-                        TextSpan(text: e.customerName,style:const  TextStyle(fontWeight: FontWeight.w600,color: Colors.black87))
+                        const TextSpan(text: 'Client : ',style: TextStyle(color: primaryColor)),
+                        TextSpan(text: e.customerName,style:const  TextStyle(fontWeight: FontWeight.w500,color: Colors.black87))
                       ]
                     )): (e is Achat ? RichText(text: TextSpan(
                       children: [
-                        const TextSpan(text: 'Fournisseur : ',style: TextStyle(color: Colors.black87)),
-                        TextSpan(text: e.providerName,style:const  TextStyle(fontWeight: FontWeight.w600,color: Colors.black87))
+                        const TextSpan(text: 'Fournisseur : ',style: TextStyle(color: primaryColor)),
+                        TextSpan(text: e.providerName,style:const  TextStyle(fontWeight: FontWeight.w500,color: Colors.black87))
                       ]
                     )) : RichText(text: TextSpan(
                       children: [
-                        const TextSpan(text: 'Stock de destination : ',style: TextStyle(color: Colors.black87)),
-                        TextSpan(text: e.stocktotransfername,style:const  TextStyle(fontWeight: FontWeight.w600,color: Colors.black87))
+                        const TextSpan(text: 'Stock de destination : ',style: TextStyle(color: primaryColor)),
+                        TextSpan(text: e.stocktotransfername,style:const  TextStyle(fontWeight: FontWeight.w500,color: Colors.black87))
                       ]
                     ))),
                     RichText(text: TextSpan(
                       children: [
-                        const TextSpan(text: 'Enregistré(e) par :',style: TextStyle(color: Colors.black87)),
-                        TextSpan(text: e.userName,style:const  TextStyle(fontWeight: FontWeight.w600,color: Colors.black87))
+                        const TextSpan(text: 'Enregistré(e) par : ',style: TextStyle(color: primaryColor)),
+                        TextSpan(text: e.userName,style:const  TextStyle(fontWeight: FontWeight.w500,color: Colors.black87))
                       ]
                     ))
                   ],
@@ -571,7 +571,7 @@ class StockTransactionHistoryViewState extends State<StockTransactionHistoryView
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                
-            Text('Filtre/Date :  '),
+            const Text('Filtre/Date :  ',style: TextStyle(color: primaryColor),),
             const SizedBox(width: 5.0,),
                    DateTimeField(
                     decoration:  InputDecoration(

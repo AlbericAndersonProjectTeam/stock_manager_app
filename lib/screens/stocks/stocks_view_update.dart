@@ -96,7 +96,7 @@ class StockCreateViewScreenState extends State<StockViewUpdateScreen>{
             Row(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-               const Icon(Icons.file_open,size: 30.0,),
+               const Icon(Icons.file_open,size: 30.0,color: primaryColor,),
                const SizedBox(width: 20.0,),
                Container(
                 constraints: BoxConstraints(
@@ -111,19 +111,19 @@ class StockCreateViewScreenState extends State<StockViewUpdateScreen>{
             ),
             const  SizedBox(height: 20.0,),
               ListTile(
-              leading: const Icon(Icons.location_on),
+              leading: const Icon(Icons.location_on,color: primaryColor,),
               titleTextStyle: const  TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
               title: const Text("Emplacement"),
               subtitle: Text(stock.location),
             ) , 
              ListTile(
-              leading: const Icon(Icons.date_range),
+              leading: const Icon(Icons.date_range,color: primaryColor,),
               titleTextStyle:   const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
               title: const Text("Date d'enregistrement"),
               subtitle: Text(outputDate), 
             ) , 
              ListTile(
-              leading: const Icon(Icons.person),
+              leading: const Icon(Icons.person,color: primaryColor,),
               titleTextStyle:   const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
               title: const Text("Enregistré par"),
               subtitle: Text(stock.userName), 

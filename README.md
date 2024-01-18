@@ -4,7 +4,7 @@ Application de gestion de stock.
 C'est l'application idéale pour toute entreprise souhaitant automatiser la gestion de ses stocks car elle se concentre non seulement sur l'enregistrement de vos produits , l'ajout des stocks proprement dits se basant sur vos produits enregistrés mais aussi sur la gestion d'assistants vous permettant de gérer les données en toute cohésion avec vos personnes de confiances !
 
 
-## Utilsation
+## Utilisation
 
 ### Ajouter un produit 
 

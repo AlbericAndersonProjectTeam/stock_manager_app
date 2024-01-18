@@ -4,6 +4,7 @@ import 'package:stock_manager_app/constants/static_widgets_constants.dart';
 import 'package:stock_manager_app/models/product.dart';
 import 'package:stock_manager_app/screens/products/product_create_update.dart';
 import 'package:stock_manager_app/screens/products/product_details.dart';
+import 'package:stock_manager_app/styles/colors.dart';
 import 'package:stock_manager_app/widgets/product_body.dart';
 
 class ProductCard extends StatelessWidget{
@@ -21,44 +22,50 @@ class ProductCard extends StatelessWidget{
             CustomPageTransistion(page: ProductDetailScreen(product:product,canDelete: canDelete,),duration: 500).maketransition()
           ).then((value) => ProductBodyState.state.refresh());
       },
-      child: Card(
+      child: Container(
+      margin: const EdgeInsets.symmetric(vertical : 5.0,horizontal: 10.0),
+      padding: const EdgeInsets.all(0),
+        child: Card(
+          elevation: 3.0,
+          margin: const EdgeInsets.all(0.0),
   shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(4),
   ),
   clipBehavior: Clip.antiAliasWithSaveLayer,
-      margin: const EdgeInsets.symmetric(vertical : 5.0,horizontal: 10.0),
       child: Padding(padding: const EdgeInsets.all(10.0),child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-       const Icon(Icons.file_open,size: 30.0,),
+       const Icon(Icons.file_open,size: 30.0,color: primaryColor,),
              Expanded(child: 
               SizedBox(
                 width: 150,
                 child: 
              ListTile(
-              title: Text(product.name,style: const TextStyle(fontWeight: FontWeight.w500)),
+              title: Text(product.name,style: const TextStyle(fontWeight: FontWeight.w500,color: primaryColor)),
               subtitle: Text("${product.description}",
                     overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: primaryColor),
               maxLines: 1,),
              ),
               )) ,
           PopupMenuButton(
+            iconColor : primaryColor,
             itemBuilder: (context){
           return [
             const  PopupMenuItem<int>(
                       value: 0,
                       child: Row(children: [
-                        Icon(Icons.remove_red_eye),
+                        Icon(Icons.remove_red_eye,color: primaryColor,),
                         SizedBox(width: 5.0,),
-                        Text('Voir')
+                        Text('Voir',style: TextStyle(color: primaryColor),)
                       ]),
                   ),
             const PopupMenuItem<int>(
                       value: 1,
                       child: Row(children: [
-                        Icon(Icons.edit),
+                        Icon(Icons.edit,color: primaryColor,),
                         SizedBox(width: 5.0,),
-                        Text('Modifier')
+                        Text('Modifier',style: TextStyle(color: primaryColor),)
                       ]),
                   ),
 
@@ -66,9 +73,9 @@ class ProductCard extends StatelessWidget{
                       value: 2,
                       enabled: canDelete,
                       child: const Row(children: [
-                        Icon(Icons.delete),
+                        Icon(Icons.delete,color: primaryColor,),
                         SizedBox(width: 5.0,),
-                        Text('Supprimer')
+                        Text('Supprimer',style: TextStyle(color: primaryColor),)
                       ]),
                   ),
           ];
@@ -95,6 +102,7 @@ class ProductCard extends StatelessWidget{
         ],
       ),),
     ),
+      ),
     );
   }
 

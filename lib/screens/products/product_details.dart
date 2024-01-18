@@ -50,37 +50,37 @@ class ProductDetailScreen extends StatelessWidget{
             Row(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-               const Icon(Icons.file_open,size: 30.0,),
+               const Icon(Icons.file_open,size: 30.0,color: primaryColor,),
                 Text(productToShow.name,style: const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 30.0),),
               ],
             ),
             const  SizedBox(height: 20.0,),
               ListTile(
-              leading: const Icon(Icons.money),
+              leading: const Icon(Icons.money,color: primaryColor,),
               titleTextStyle: const  TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
               title: const Text("Prix"),
               subtitle: Text("${productToShow.price} francs CFA"),
             ) , 
              ListTile(
-              leading: const Icon(Icons.remove_shopping_cart),
+              leading: const Icon(Icons.remove_shopping_cart,color: primaryColor,),
               titleTextStyle:   const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
               title: const Text("Seuil"),
               subtitle: Text("${productToShow.seuil}"), 
             ) ,
              ListTile(
-              leading: const Icon(Icons.date_range),
+              leading: const Icon(Icons.date_range,color: primaryColor,),
               titleTextStyle:   const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
               title: const Text("Date de péremption"),
               subtitle: Text(outputDate), 
             ) ,
              ListTile(
-              leading: const Icon(Icons.description),
+              leading: const Icon(Icons.description,color: primaryColor,),
               titleTextStyle: const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
               title: const Text("Description"),
               subtitle: Text(productToShow.description),
             ) ,
              ListTile(
-              leading: const Icon(Icons.person),
+              leading: const Icon(Icons.person,color: primaryColor,),
               titleTextStyle: const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 20.0),
               title: const Text("Enregistré par"),
               subtitle: Text(productToShow.userName),

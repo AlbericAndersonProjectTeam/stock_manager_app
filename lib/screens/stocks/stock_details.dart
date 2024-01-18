@@ -147,7 +147,7 @@ class StockProductsViewState extends State<StockProductsView>{
         titlePadding: const EdgeInsets.all(5.0),
         insetPadding: const EdgeInsets.only(left: 10.0,right: 10.0),
          title: ListTile(
-          title: Text("Lot de ${lot.product.name}",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20.0),),
+          title: Text("Lot de ${lot.product.name}",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20.0,color: primaryColor,),),
           subtitle: const Text('Vous ne pouvez pas modifier le produit dans un lot. Vous pouvez toute fois supprimer le lot et en créer un autre.',style: TextStyle(fontSize: 12.0),),
          ),
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.elliptical(5, 5))),
@@ -380,8 +380,8 @@ class StockProductsViewState extends State<StockProductsView>{
           children: [
             Expanded(
               child: ListTile(
-                title: Text('${lots.length} lots constitutifs',style: const TextStyle(fontSize: 20.0,fontWeight: FontWeight.w500),),
-                subtitle: const Text('Tappez double sur un lot pour voir plus.N\'apportez ici que des modifications dont vous ne souhaitez garder aucune trace.',style: TextStyle(fontSize: 10.0),),
+                title: Text('${lots.length} lots constitutifs',style: const TextStyle(fontSize: 20.0,fontWeight: FontWeight.w500,color: primaryColor,),),
+                subtitle: const Text('Tappez double sur un lot pour plus d\'options. N\'apportez ici que des modifications dont vous ne souhaitez garder aucune trace.',style: TextStyle(fontSize: 10.0),),
               )
               ),
             ElevatedButton(onPressed: () {
