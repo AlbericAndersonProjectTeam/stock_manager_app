@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:stock_manager_app/constants/static_widgets_constants.dart';
 import 'package:stock_manager_app/styles/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 
@@ -56,6 +58,26 @@ class HelpScreenState extends State<HelpScreen> {
                     ]
                   )
                 ) ,),
+
+                 ListTile(
+            title: const Text(
+              'Cliquez pour consulter la documentation complète.',
+              style: TextStyle(color: primaryColor,fontWeight: FontWeight.w400,decoration: TextDecoration.underline,decorationColor: primaryColor),
+            ),
+            onTap: () async {
+              Navigator.of(context).pop();
+              final Uri url = Uri.parse('https://github.com/AlbericAndersonProjectTeam/stock_manager_app/blob/main/README.md');
+
+                try {
+                   await launchUrl(url);
+                } catch (e) {
+                    ToastMessage(message: "Action impossible sur cet appareil.").showToast();
+                }
+              
+            },
+          ),
+              const SizedBox(height: 15.0,),
+
                ExpansionPanelList(
                 expansionCallback: (panelIndex, isExpanded) {
                   List<Faq> tempFaqs = [];
@@ -77,7 +99,9 @@ class HelpScreenState extends State<HelpScreen> {
                   body: ListTile(title:  Text(faq.body,style: const TextStyle(fontSize: 14.0),),),
                   isExpanded: faq.isExpanded,
                   )).toList(),
-               )
+               ),
+            
+               const SizedBox(height: 40.0,),
               ],
             ),
     );
