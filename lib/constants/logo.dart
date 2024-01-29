@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:stock_manager_app/styles/colors.dart';
 
-const Widget logoStockManager = 
+Widget logoStockManager = 
                     CircleAvatar(
                       backgroundColor: secondaryColor,
-                      child: Text('LOGO',textAlign: TextAlign.center,style: TextStyle(fontSize: 10.0,fontWeight: FontWeight.bold),),
+                      child: Image.asset("assets/icon/logo_avec_fond.png",width: 50.0,),
                 );
 
 Widget thicklogoStockManager = 
@@ -14,8 +14,7 @@ Widget thicklogoStockManager =
                       width: 250,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                        color: secondaryColor,
                       ),
-                      child: const Text('GrAND LOGO',textAlign: TextAlign.center,style: TextStyle(fontSize: 10.0,fontWeight: FontWeight.bold),),
+                      child: Image.asset("assets/icon/logo_avec_fond.png",width: 250.0,),
                 );
           

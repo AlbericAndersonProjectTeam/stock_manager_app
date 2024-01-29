@@ -97,8 +97,8 @@ class StockDetailScreenState extends State<StockDetailScreen> {
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart,),label: "Lots"),
-          BottomNavigationBarItem(icon: Icon(Icons.details,),label: "Autres détails"),
-          BottomNavigationBarItem(icon: Icon(Icons.currency_exchange,),label: "Transactions"),
+          BottomNavigationBarItem(icon: ImageIcon(AssetImage("assets/Icones/Autres_details.png"),),label: "Autres détails"),
+          BottomNavigationBarItem(icon: ImageIcon(AssetImage("assets/Icones/Transactions.png")),label: "Transactions"),
         ],
 ),
     );
@@ -425,7 +425,8 @@ class LotsGridView extends StatelessWidget{
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset("assets/Images/Bg_aucun_produit.png",width: 250.0,),
+        Image.asset("assets/Images/Bg_aucun_lot.png",width: 150.0,),
+        const SizedBox(height: 20.0,),
         Text( istransaction ? 'Aucun lot de produit ajouté.' : "Aucun produit dans ce stock.",style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold),)
       ],
     ),

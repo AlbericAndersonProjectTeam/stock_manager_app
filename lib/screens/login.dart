@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stock_manager_app/constants/data_constants.dart';
 import 'package:stock_manager_app/constants/db_instaces.dart';
 import 'package:stock_manager_app/constants/logo.dart';
 import 'package:stock_manager_app/constants/static_widgets_constants.dart';
@@ -58,6 +59,7 @@ class LoginScreenState extends State<LoginScreen>{
       prefs.setString('userEmail', user.email);
       prefs.setInt('isOwner', user is Owner ? 1 : 0);
       prefs.setInt('isAdmin', user is Owner ? 1 : (user.role=="admin" ? 1 : 0));
+      DATACONSTANTSOFSESSION = DataConstantsOfSession();
 
       
       String token = await stockManagerdatabase.getOneToken(user.id);
@@ -106,7 +108,7 @@ class LoginScreenState extends State<LoginScreen>{
                     keyboardType: TextInputType.name,
                     controller: emailController,
                     decoration:  InputDecoration(
-                      suffix: const Icon(Icons.mail),
+                      suffix: const Icon(Icons.mail,color: primaryColor,),
                       label: const Text('Adresse Email'),
                       border:OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),

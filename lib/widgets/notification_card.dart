@@ -34,7 +34,7 @@ class NotificationCardState extends State<NotificationCard>{
   String saveddate  = saveddatedateformat.format(inputDate);
 
     return   GestureDetector(
-      onDoubleTap: (){
+      onTap: (){
         setState(() {
           notification.viewed = true;
         });
@@ -61,14 +61,14 @@ class NotificationCardState extends State<NotificationCard>{
           Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-       const Icon(Icons.notifications,size: 30.0,),
+       const Icon(Icons.notifications,size: 30.0,color: primaryColor,),
             Expanded(child: 
               SizedBox(
                 width: 150,
                 child: 
              ListTile(
-              title: Text(notification.title,style: const TextStyle(fontWeight: FontWeight.w500)),
-              subtitle: Text(notification.content,),
+              title: Text(notification.title,style: const TextStyle(fontWeight: FontWeight.w500,color: primaryColor)),
+              subtitle: Text(notification.content,style: !notification.viewed ? TextStyle(color: Colors.white,fontWeight: FontWeight.w500) : null,),
              ),
               )) ,
           /* IconButton(onPressed: (){
@@ -76,7 +76,7 @@ class NotificationCardState extends State<NotificationCard>{
           }, icon: Icon(Icons.read_more)) */
         ],
       ),
-      Align(alignment: Alignment.topRight,child: Text(saveddate,style: const TextStyle(fontSize: 12.0),),),
+      Align(alignment: Alignment.topRight,child: Text(saveddate,style:  TextStyle(fontSize: 12.0,color: !notification.viewed ? Colors.white : null,fontWeight: !notification.viewed ? FontWeight.w500 : FontWeight.normal),),),
         ],
       ),),
     ),

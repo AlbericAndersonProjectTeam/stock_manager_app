@@ -105,7 +105,7 @@ showBottomSheetMenu(BuildContext context){
       child: Padding(padding: const EdgeInsets.all(10.0),child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-       const Icon(Icons.file_open,size: 30.0,color: primaryColor,),
+       const Icon(Icons.person,size: 30.0,color: primaryColor,),
             Expanded(child: 
               SizedBox(
                 width: 150,

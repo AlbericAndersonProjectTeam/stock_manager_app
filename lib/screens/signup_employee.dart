@@ -88,7 +88,7 @@ loadData() async{
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
 
-         SizedBox(height: MediaQuery.of(context).size.height * 0.15,child: const Align(alignment: Alignment.center,child: logoStockManager,),),
+         SizedBox(height: MediaQuery.of(context).size.height * 0.15,child:  Align(alignment: Alignment.center,child: logoStockManager,),),
           const  ListTile(title: Text("Inscription",textAlign: TextAlign.center, style: TextStyle(color: primaryColor,fontSize: 25.0,fontWeight: FontWeight.bold,)),subtitle: Text('Employé',textAlign: TextAlign.center,),),
           Stepper(
             connectorThickness: 2.0,
@@ -157,7 +157,7 @@ loadData() async{
                     keyboardType: TextInputType.name,
                     controller: emailController,
                     decoration:  InputDecoration(
-                      suffix: const Icon(Icons.mail),
+                      suffix: const Icon(Icons.mail,color: primaryColor,),
                       label: const Text('Adresse Email'),
                       border:OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),

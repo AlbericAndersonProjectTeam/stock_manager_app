@@ -96,7 +96,7 @@ class StockCreateViewScreenState extends State<StockViewUpdateScreen>{
             Row(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-               const Icon(Icons.file_open,size: 30.0,color: primaryColor,),
+               Image.asset("assets/Icones/Stock2.png",width: 30.0,),
                const SizedBox(width: 20.0,),
                Container(
                 constraints: BoxConstraints(

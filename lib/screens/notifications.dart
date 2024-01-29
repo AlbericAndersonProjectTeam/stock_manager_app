@@ -82,7 +82,8 @@ class NotificationList extends StatelessWidget{
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset("assets/Images/Bg_aucun_stock.png",width: 250.0,),
+        Image.asset("assets/Images/Bg_aucune_notification.png",width: 70.0,),
+        const SizedBox(height: 20.0,),
         const Text('Aucune notification',style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold),)
       ],
     ),

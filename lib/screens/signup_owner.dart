@@ -85,7 +85,7 @@ class SignupOwnerScreenState extends State<SignupOwnerScreen>{
           preferredSize: const Size.fromHeight(60.0), // here the desired height
           child:AppBar(
             title: const Text('Inscription propriétaire'),
-            leading:const Padding(padding: const EdgeInsets.all(5.0),child: logoStockManager,),
+            leading: Padding(padding: const EdgeInsets.all(5.0),child: logoStockManager,),
         )
             // ...
           ),
@@ -173,7 +173,7 @@ class SignupOwnerScreenState extends State<SignupOwnerScreen>{
                     keyboardType: TextInputType.name,
                     controller: nameController,
                     decoration:  InputDecoration(
-                      suffix: const Icon(Icons.person),
+                      suffix: const Icon(Icons.person,color: primaryColor,),
                       label: const Text('Votre nom'),
                       border:OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -188,7 +188,7 @@ class SignupOwnerScreenState extends State<SignupOwnerScreen>{
                     keyboardType: TextInputType.name,
                     controller: firstnameController,
                     decoration:  InputDecoration(
-                      suffix: const Icon(Icons.person),
+                      suffix: const Icon(Icons.person,color: primaryColor,),
                       label: const Text('Prénom'),
                       border:OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -203,7 +203,7 @@ class SignupOwnerScreenState extends State<SignupOwnerScreen>{
                     keyboardType: TextInputType.number,
                     controller: phonenumberController,
                     decoration:  InputDecoration(
-                      suffix: const Icon(Icons.phone),
+                      suffix: const Icon(Icons.phone,color: primaryColor,),
                       label: const Text('Téléphone'),
                       border:OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -219,7 +219,7 @@ class SignupOwnerScreenState extends State<SignupOwnerScreen>{
                     keyboardType: TextInputType.name,
                     controller: emailController,
                     decoration:  InputDecoration(
-                      suffix: const Icon(Icons.mail),
+                      suffix: const Icon(Icons.mail,color: primaryColor,),
                       label: const Text('Adresse Email'),
                       border:OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -244,7 +244,7 @@ class SignupOwnerScreenState extends State<SignupOwnerScreen>{
                     keyboardType: TextInputType.name,
                     controller: boutiqueController,
                     decoration:  InputDecoration(
-                      suffix: const Icon(Icons.store),
+                      suffix: const Icon(Icons.store,color: primaryColor,),
                       label: const Text('Nom de votre Boutique/Société'),
                       border:OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -259,7 +259,7 @@ class SignupOwnerScreenState extends State<SignupOwnerScreen>{
                     keyboardType: TextInputType.name,
                     controller: addressController,
                     decoration:  InputDecoration(
-                      suffix: const Icon(Icons.store),
+                      suffix: const Icon(Icons.store,color: primaryColor,),
                       label: const Text('Votre adresse'),
                       border:OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),

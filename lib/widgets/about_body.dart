@@ -16,7 +16,7 @@ class AboutScreen extends StatelessWidget {
           thicklogoStockManager,
          const SizedBox(height: 30.0,),
          const Text('Version 1.0.0'),
-         const Text('Réalisé par la Team7'),
+         const Text('Réalisé par la Team 5'),
          const SizedBox(height: 50.0,),
          const Align(alignment: Alignment.topLeft,child: Text('Contactez et suivez-nous', style: TextStyle(color: primaryColor,fontSize: 20.0, fontWeight: FontWeight.w500,),),),
          const Divider(),

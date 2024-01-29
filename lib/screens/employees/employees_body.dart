@@ -36,6 +36,7 @@ class EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
       state = this;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String ownerId =  prefs.getString('ownerId')!;
+      print('ownerId : $ownerId');
       int isOwnerPrefs = prefs.getInt('isOwner')!;
       if(isOwnerPrefs==1) isOwner = true;
       if(DATACONSTANTSOFSESSION.employees != null){
@@ -123,18 +124,17 @@ class UserListView extends StatelessWidget{
   final bool isOwner;
   @override
   Widget build(BuildContext context) {
-    String emptyText = areadmin ? "Aucun administrateurs":"Aucun employé";
+    String emptyText = areadmin ? "Aucun administrateur":"Aucun employé";
    return users.isNotEmpty ? ListView.builder(
     itemCount: users.length,
     itemBuilder: (context,index){
       return UserCard(employee : users[index],canDelete:isOwner);
    }) : Container(
     width: MediaQuery.of(context).size.width,
-    color: secondaryColor,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset("assets/Images/Bg_aucun_stock.png",width: 250.0,),
+        Image.asset("assets/Images/Bg_aucun_employe.png",width: 250.0,),
          Text(emptyText,style: const TextStyle(color: primaryColor,fontWeight: FontWeight.bold),)
       ],
     ),

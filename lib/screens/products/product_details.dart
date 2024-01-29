@@ -50,7 +50,7 @@ class ProductDetailScreen extends StatelessWidget{
             Row(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-               const Icon(Icons.file_open,size: 30.0,color: primaryColor,),
+               const ImageIcon(AssetImage("assets/Icones/Produit2.png"), color: primaryColor,),
                 Text(productToShow.name,style: const TextStyle(color: primaryColor, fontWeight: FontWeight.bold,fontSize: 30.0),),
               ],
             ),
