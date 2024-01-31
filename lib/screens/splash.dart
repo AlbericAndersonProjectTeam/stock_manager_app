@@ -53,7 +53,7 @@ class SplashScreenState extends State<SplashScreen>{
     init();
     Timer(const Duration(seconds: 3), () { 
       Navigator.of(context).pushReplacement(
-        CustomPageTransistion(page: const LoginScreen(),duration: 2300).maketransition()
+        CustomPageTransistion(page: const LoginScreen(),duration: 800).maketransition()
       );
     });
   }

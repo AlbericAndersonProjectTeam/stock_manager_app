@@ -65,7 +65,6 @@ class HelpScreenState extends State<HelpScreen> {
               style: TextStyle(color: primaryColor,fontWeight: FontWeight.w400,decoration: TextDecoration.underline,decorationColor: primaryColor),
             ),
             onTap: () async {
-              Navigator.of(context).pop();
               final Uri url = Uri.parse('https://github.com/AlbericAndersonProjectTeam/stock_manager_app/blob/main/README.md');
 
                 try {
