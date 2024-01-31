@@ -5,6 +5,7 @@ import 'package:stock_manager_app/constants/static_widgets_constants.dart';
 import 'package:stock_manager_app/models/user.dart';
 import 'package:stock_manager_app/screens/employees/employees_body.dart';
 import 'package:stock_manager_app/screens/home.dart';
+import 'package:stock_manager_app/styles/colors.dart';
 
 class UserCreateScreen extends StatefulWidget{
   const UserCreateScreen({super.key, this.iscreate = true, this.justview = false, this.isconnectedUser = false, this.user});
@@ -147,6 +148,7 @@ class UserCreateScreenState extends State<UserCreateScreen>{
       telController.text = user!.phonenumber;
       adressController.text = user!.address;
       passwordController.text = user!.password;
+      passwordVerifyController.text = user!.password;
     }
     if(user is Owner){
       boutiqueController.text = user!.boutique;
@@ -164,17 +166,74 @@ class UserCreateScreenState extends State<UserCreateScreen>{
     });
   }
 
+
+  checkPassword(BuildContext context){
+    showDialog(context: context, builder: (dialogcontext){
+
+    final checkformKey = GlobalKey<FormState>();
+    TextEditingController checkpasswordController = TextEditingController();
+
+      return AlertDialog(
+         title: ListTile(
+          title: Text("Confirmez votre mot de passe",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20.0,color: primaryColor,),),
+         ),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.elliptical(5, 5))),
+        content: Container(
+          height: 100.0,
+          child: Form(
+          key: checkformKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+                TextFormField(
+                    keyboardType: TextInputType.name,
+                    controller: checkpasswordController,
+                    decoration:  InputDecoration(
+                      label: const Text('Mot de passe'),
+                      border:OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    validator: (String? value){
+                      return value!.length >= 8 ? (value == passwordController.text ? null : "Mot de passe incorrecte.") : "Au moins 8 caractères.";
+                    },
+                  ),
+                  const SizedBox(height: 10.0,),
+            ],
+          )
+        ),
+        ),
+        actions: [
+          TextButton(onPressed: (){
+            Navigator.of(dialogcontext).pop();
+          }, child:const Text('Annuler',style: TextStyle(color: primaryColor,fontSize: 18.0),)),
+          TextButton(onPressed: (){
+            if(checkformKey.currentState!.validate()){
+
+            Navigator.of(dialogcontext).pop();
+              setState(() {
+                justview = false;
+              });
+            }
+            }, child:const Text('Confirmer',style: TextStyle(color: primaryColor,fontSize: 18.0))),
+        ],
+      );
+  
+    }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size contextSize = MediaQuery.of(context).size;
     List<String> selectItems = user is Owner ? ["Administrateur","Employé","Propriétaire"] : ["Administrateur","Employé"];
     return Scaffold(
       appBar: AppBar(
-        title: iscreate ? const Text('Ajout d\'un employé ') : const Text('Profil Assistant'),
+        title: iscreate ? const Text('Ajout d\'un employé ') : const Text('Profil Utilisateur'),
       ),
       body: SingleChildScrollView(
         child: Padding(padding:  EdgeInsets.only(
-          top: contextSize.height*0.08,left: contextSize.width*0.05,right: contextSize.width*0.05),child: Column(
+          top: contextSize.height*0.05,left: contextSize.width*0.05,right: contextSize.width*0.05),child: Column(
           
           children: [
           Form(
@@ -316,9 +375,9 @@ class UserCreateScreenState extends State<UserCreateScreen>{
                     keyboardType: TextInputType.visiblePassword,
                     controller: passwordController,
                     readOnly: justview,
-                    obscureText: hidepass,
+                    obscureText: justview ? true : hidepass,
                     decoration:  InputDecoration(
-                      suffix:  IconButton(onPressed: (){
+                       suffix: justview ? null : IconButton(onPressed: (){
                         setState(() {
                           hidepass = !hidepass;
                         });
@@ -369,9 +428,7 @@ class UserCreateScreenState extends State<UserCreateScreen>{
                       });
                     }
                    }else{
-                      setState(() {
-                        justview = false;
-                      });
+                    checkPassword(context);
                    }
                   }else{
                      if(formKey.currentState!.validate()){
@@ -379,7 +436,9 @@ class UserCreateScreenState extends State<UserCreateScreen>{
                    }
                   }
                   }, child: showProgress ?  customCircularProcessIndicator : Text( justview ? (editrole ? 'Enregistrer' :  'Modifier'): 'Enregistrer',style: TextStyle(color: Colors.white),)),
-               ) : Container()
+               ) : Container(),
+
+             const SizedBox(height: 30.0,),
           ],
         ),),
       ),

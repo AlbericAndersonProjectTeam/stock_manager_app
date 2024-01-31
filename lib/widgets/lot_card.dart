@@ -28,19 +28,16 @@ class LotCard extends StatelessWidget{
         children: [
              Expanded(child: 
              ListTile(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text("${lot.numberofproduct}",
-                  maxLines: 2,
+              title: Text(
+                  "${lot.numberofproduct}",
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: false,
                   style: const TextStyle(
                     color: primaryColor,
                     fontSize: 40.0,
                     fontWeight: FontWeight.w500,
-                    overflow: TextOverflow.ellipsis,
                     )),
-                ],
-              ),
               subtitle:  Container(
                     width: MediaQuery.of(context).size.width / 5,
                     child: Text("${lot.product.name}",
