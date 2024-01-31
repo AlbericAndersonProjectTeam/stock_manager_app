@@ -83,13 +83,19 @@ loadData() async{
   @override
   Widget build(BuildContext context) {
    return Scaffold(
+    appBar:  PreferredSize(
+          preferredSize: const Size.fromHeight(60.0), // here the desired height
+          child:AppBar(
+            title: const Text('Inscription assistant'),
+            leading: Padding(padding: const EdgeInsets.all(5.0),child: logoStockManager,),
+        )
+            // ...
+          ),
     body: SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-
-         SizedBox(height: MediaQuery.of(context).size.height * 0.15,child:  Align(alignment: Alignment.center,child: logoStockManager,),),
-          const  ListTile(title: Text("Inscription",textAlign: TextAlign.center, style: TextStyle(color: primaryColor,fontSize: 25.0,fontWeight: FontWeight.bold,)),subtitle: Text('Employé',textAlign: TextAlign.center,),),
+          const SizedBox(height: 50.0,),
           Stepper(
             connectorThickness: 2.0,
             controlsBuilder: (context, details) {
@@ -148,7 +154,7 @@ loadData() async{
               },
             currentStep: currentStep,
             steps: [
-                  Step(title: const Text("Vérification du type de compte",style: TextStyle(color: primaryColor,fontSize: 18.0,fontWeight: FontWeight.bold),), subtitle: const Text("Cette vérification permet à Stock Manager d'identifier toute première connexion"), content: Form(
+                  Step(title: const Text("Vérification du type de compte",style: TextStyle(color: primaryColor,fontSize: 18.0,fontWeight: FontWeight.bold),), subtitle: const Text("Nous vérifions que vous avez bien été ajouté par un utilisateur propriétaire"), content: Form(
                     key: emailFormKey,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
